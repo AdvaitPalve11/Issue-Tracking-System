@@ -1,7 +1,5 @@
 # Issue Tracker
 
-This repository is organized for two parallel workstreams:
-
 - `Backend/` contains the Spring Boot API and persistence layer.
 - `frontend/` is reserved for the client app your partner will build.
 
