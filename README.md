@@ -1,4 +1,4 @@
-# Issue Tracker Monorepo
+# Issue Tracker
 
 This repository is organized for two parallel workstreams:
 
