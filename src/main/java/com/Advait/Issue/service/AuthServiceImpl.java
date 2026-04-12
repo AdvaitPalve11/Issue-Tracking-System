@@ -1,9 +1,9 @@
 package com.Advait.Issue.service;
 
-import com.issuetracker.dto.RegisterRequest;
-import com.issuetracker.model.Role;
-import com.issuetracker.model.User;
-import com.issuetracker.repository.UserRepository;
+import com.Advait.Issue.dto.RegisterRequest;
+import com.Advait.Issue.model.Role;
+import com.Advait.Issue.model.User;
+import com.Advait.Issue.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
