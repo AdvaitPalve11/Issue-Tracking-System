@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
-                .password(request.getPassword()) // we'll hash later
+                .password(request.getPassword())
                 .role(Role.MEMBER)
                 .build();
 
