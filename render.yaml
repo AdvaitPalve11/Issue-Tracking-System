@@ -1,11 +1,10 @@
 services:
   - type: web
     name: issuetracker-backend
-    env: java
+    env: docker
     plan: free
     rootDir: .
-    buildCommand: ./mvnw -DskipTests clean package
-    startCommand: java -jar target/Issue-Tracking-0.0.1-SNAPSHOT.jar
+    dockerfilePath: ./Dockerfile
     autoDeploy: true
     envVars:
       - key: DB_URL
