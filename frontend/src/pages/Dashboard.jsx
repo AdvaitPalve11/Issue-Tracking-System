@@ -21,7 +21,7 @@ function Dashboard() {
   return (
     <div className="container">
       <div className="header">
-        <h1>🚀 Issue Tracker</h1>
+        <h1> Issue Tracker</h1>
         <button className="btn" onClick={() => navigate("/create")}>
           + New Issue
         </button>

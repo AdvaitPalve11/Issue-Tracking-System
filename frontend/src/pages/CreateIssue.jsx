@@ -26,7 +26,7 @@ function CreateIssue() {
 
   return (
     <div className="container">
-      <h1>✨ Create New Issue</h1>
+      <h1> Create New Issue</h1>
 
       <form onSubmit={handleSubmit}>
         <label>Title</label>
