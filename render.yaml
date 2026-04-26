@@ -1,7 +1,7 @@
 services:
   - type: web
     name: issuetracker-backend
-    runtime: java
+    env: java
     plan: free
     rootDir: .
     buildCommand: ./mvnw -DskipTests clean package
