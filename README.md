@@ -5,6 +5,17 @@ Issue Tracker is an open-source full-stack app with:
 - Spring Boot backend API (`src/main/java`)
 - React + Vite frontend (`frontend/`)
 
+## Download and Run on PC (Easiest)
+
+If you downloaded the application from the **Releases** tab on GitHub:
+
+1. Ensure you have **Java 21+** installed on your system.
+2. Extract the downloaded zip folder.
+3. Double-click `start.bat` (Windows) or run `./start.sh` (Mac/Linux).
+4. The application will start and automatically open in your default web browser at `http://localhost:8080`.
+
+*Note: The standalone version uses an embedded database (H2) and requires no additional setup like PostgreSQL or Docker.*
+
 ## Run On Any Server (Fastest)
 
 This repository includes Docker deployment files so anyone can clone and run directly on a VPS.
