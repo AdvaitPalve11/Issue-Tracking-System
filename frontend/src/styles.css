@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #e2e8f0;
+}
+
+.container {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.card {
+  background: rgba(30, 41, 59, 0.6);
+  padding: 18px;
+  margin-top: 15px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.status-open { color: #f87171; }
+.status-progress { color: #facc15; }
+.status-resolved { color: #4ade80; }
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: none;
+  background: #0f172a;
+  color: white;
+}
+
+label {
+  margin-top: 12px;
+  display: block;
+}
