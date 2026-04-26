@@ -1,15 +1,89 @@
 # Issue Tracker
 
-This repository contains:
+Issue Tracker is an open-source full-stack app with:
 
-- A Spring Boot backend API under `src/main/java`
-- A React + Vite frontend under `frontend/`
+- Spring Boot backend API (`src/main/java`)
+- React + Vite frontend (`frontend/`)
 
-## Quick Start (Local)
+## Run On Any Server (Fastest)
 
-### 1) Backend
+This repository includes Docker deployment files so anyone can clone and run directly on a VPS.
 
-From the repository root:
+### One-Time Server Setup
+
+Install Docker Engine and Docker Compose on the server.
+
+### Download And Start
+
+```bash
+git clone https://github.com/AdvaitPalve11/Issue-Tracking-System.git
+cd Issue-Tracking-System
+cp .env.server.example .env
+docker compose up -d --build
+```
+
+On Windows PowerShell:
+
+```powershell
+git clone https://github.com/AdvaitPalve11/Issue-Tracking-System.git
+cd Issue-Tracking-System
+Copy-Item .env.server.example .env
+docker compose up -d --build
+```
+
+1. Install Docker and Docker Compose on the server.
+2. Clone repository.
+3. Copy environment template and edit values.
+4. Start services.
+
+```bash
+cp .env.server.example .env
+docker compose up -d --build
+```
+
+Default ports:
+
+- Backend API: `http://<server-ip>:8080`
+- PostgreSQL: internal container network only
+
+### First Use (Sign Up + Login)
+
+1. Sign up with `POST /auth/register`
+2. Login with `POST /auth/login`
+3. Use returned email/password for HTTP Basic auth on protected routes
+
+Quick test:
+
+```bash
+curl -X POST http://<server-ip>:8080/auth/register \
+	-H "Content-Type: application/json" \
+	-d '{"name":"Admin","email":"admin@example.com","password":"Secret123!"}'
+
+curl -X POST http://<server-ip>:8080/auth/login \
+	-H "Content-Type: application/json" \
+	-d '{"email":"admin@example.com","password":"Secret123!"}'
+```
+
+## Environment Variables (Server)
+
+Set these in `.env` for server deployment:
+
+- `POSTGRES_DB`
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `ALLOWED_ORIGINS`
+
+For production, update `POSTGRES_PASSWORD` and set `ALLOWED_ORIGINS` to your frontend domain.
+
+The backend container maps these into:
+
+- `DB_URL`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+## Local Development
+
+### Backend
 
 ```powershell
 set DB_URL=jdbc:postgresql://localhost:5432/issuetracker
@@ -18,85 +92,27 @@ set DB_PASSWORD=your_password
 mvnw.cmd spring-boot:run
 ```
 
-Backend runs on `http://localhost:8080`.
-
-Public endpoints:
-
-- `POST /auth/register`
-- `POST /auth/login`
-
-Protected endpoints (require Basic Auth with registered email/password):
-
-- `/issues/**`
-- `/users/**`
-
-### 2) Frontend
-
-From the repository root:
+### Frontend
 
 ```powershell
 npm.cmd --prefix frontend install
 npm.cmd --prefix frontend run dev
 ```
 
-Frontend runs on `http://localhost:5173`.
-
 ## Build & Test
-
-Run these from the repository root:
 
 ```powershell
 mvnw.cmd test
 npm.cmd --prefix frontend run build
 ```
 
-## Deploy With GitHub + Render
+## GitHub Workflows
 
-This repository is now configured with:
+- CI: `.github/workflows/ci.yml`
+- Frontend Pages deploy: `.github/workflows/frontend-pages.yml`
 
-- CI workflow: `.github/workflows/ci.yml`
-- Frontend GitHub Pages deploy workflow: `.github/workflows/frontend-pages.yml`
-- Render backend blueprint: `render.yaml`
+If deploying frontend via GitHub Pages, set repository variable `VITE_API_BASE_URL`.
 
-### 1) Push code to GitHub
+## Security
 
-Push to `main` and GitHub Actions will automatically run backend tests and frontend build.
-
-### 2) Deploy frontend on GitHub Pages
-
-In GitHub repository settings:
-
-1. Open **Settings > Pages**.
-2. Set **Build and deployment** source to **GitHub Actions**.
-3. Open **Settings > Secrets and variables > Actions > Variables**.
-4. Add `VITE_API_BASE_URL` with your deployed backend URL, for example: `https://issuetracker-backend.onrender.com`.
-
-After that, each push to `main` touching frontend files deploys to:
-
-- `https://<your-github-username>.github.io/<your-repo-name>/`
-
-### 3) Deploy backend on Render
-
-1. In Render, choose **New + > Blueprint**.
-2. Connect this GitHub repository.
-3. Render will detect `render.yaml` and create:
-	- Web service: `issuetracker-backend`
-	- PostgreSQL database: `issuetracker-db`
-4. Update environment variable `ALLOWED_ORIGINS` in Render to your GitHub Pages origin:
-	- `https://<your-github-username>.github.io`
-5. Deploy.
-
-Backend uses these env vars:
-
-- `DB_URL`
-- `DB_USERNAME`
-- `DB_PASSWORD`
-- `ALLOWED_ORIGINS`
-- `PORT` (provided automatically by Render)
-
-## Notes
-
-- Backend auth uses HTTP Basic:
-  - Public: `POST /auth/register`, `POST /auth/login`
-  - Protected: `/issues/**`, `/users/**`
-- CORS is configurable through `ALLOWED_ORIGINS` (comma-separated).
+Please review [SECURITY.md](SECURITY.md) before reporting vulnerabilities.
