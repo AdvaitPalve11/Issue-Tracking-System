@@ -11,10 +11,10 @@ function Dashboard({ issues, setIssues }) {
     API.get("/issues")
       .then((res) => setIssues(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [setIssues]);
 
   const filteredIssues = issues.filter((issue) => {
-    const matchesSearch = issue.title.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = (issue.title ?? "").toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === "ALL" || issue.status === filter;
     return matchesSearch && matchesFilter;
   });
@@ -38,8 +38,9 @@ function Dashboard({ issues, setIssues }) {
         <select onChange={(e) => setFilter(e.target.value)}>
           <option value="ALL">All</option>
           <option value="OPEN">Open</option>
-          <option value="IN PROGRESS">In Progress</option>
+          <option value="IN_PROGRESS">In Progress</option>
           <option value="RESOLVED">Resolved</option>
+          <option value="CLOSED">Closed</option>
         </select>
       </div>
 
@@ -51,7 +52,7 @@ function Dashboard({ issues, setIssues }) {
         >
           <h3>{issue.title}</h3>
           <p>{issue.status}</p>
-          <p>Assigned to: {issue.assignedTo}</p>
+          <p>Assigned to: {issue.assignedToName ?? "Unassigned"}</p>
         </div>
       ))}
     </div>

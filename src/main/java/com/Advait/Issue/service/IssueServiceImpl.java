@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +49,7 @@ public class IssueServiceImpl implements IssueService {
     public List<IssueResponse> getAllIssues() {
         return issueRepository.findAll().stream()
                 .map(issue -> toResponse(issue, false))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -61,11 +63,11 @@ public class IssueServiceImpl implements IssueService {
     public IssueResponse updateIssue(Long issueId, IssueUpdateRequest request) {
         Issue issue = findIssue(issueId);
 
-        if (request.getTitle() != null && !request.getTitle().isBlank()) {
+        if (request.getTitle() != null && !request.getTitle().trim().isEmpty()) {
             issue.setTitle(request.getTitle().trim());
         }
 
-        if (request.getDescription() != null && !request.getDescription().isBlank()) {
+        if (request.getDescription() != null && !request.getDescription().trim().isEmpty()) {
             issue.setDescription(request.getDescription().trim());
         }
 
@@ -155,7 +157,7 @@ public class IssueServiceImpl implements IssueService {
     }
 
     private String requireText(String value, String fieldName) {
-        if (value == null || value.isBlank()) {
+        if (value == null || value.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, fieldName + " is required");
         }
 
@@ -187,8 +189,8 @@ public class IssueServiceImpl implements IssueService {
         List<IssueCommentResponse> comments = includeComments
                 ? issueCommentRepository.findByIssueIdOrderByCreatedAtAsc(issue.getId()).stream()
                 .map(this::toCommentResponse)
-                .toList()
-                : List.of();
+            .collect(Collectors.toList())
+            : Collections.<IssueCommentResponse>emptyList();
 
         return IssueResponse.builder()
                 .id(issue.getId())
